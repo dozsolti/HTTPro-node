@@ -14,20 +14,42 @@ class HTTPro {
   }
 
   get(url, ignoreBaseUrl = false) {
-    this.request = new HTTProRequest({
+    const _httpro = new HTTPro();
+    _httpro.request = new HTTProRequest({
       method: 'GET',
       url,
       ignoreBaseUrl
     });
 
+    return _httpro;
+  }
+  post(url, ignoreBaseUrl = false) {
+    const _httpro = new HTTPro();
+    _httpro.request = new HTTProRequest({
+      method: 'POST',
+      url,
+      ignoreBaseUrl
+    });
+
+    return _httpro;
+  }
+
+  params(params) {
+    this.request.updateParams(params);
     return this;
   }
 
-  query(queryParams) {
-    this.request.queryParams = {
-      ...this.request.queryParams,
-      ...queryParams
-    };
+  query(queries) {
+    this.request.updateQueries(queries);
+    return this;
+  }
+  body(body) {
+    this.request.updateBody(body);
+    return this;
+  }
+
+  map(mapFunc) {
+    this.request.updateMapFunc(mapFunc);
     return this;
   }
 

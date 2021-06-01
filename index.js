@@ -1,16 +1,26 @@
 console.clear();
+console.log();
+console.log();
 const httpro = require('./src/httpro.js');
 
 httpro.config({
-  baseUrl: 'https://jsonplaceholder.typicode.com'
+  baseUrl: 'https://reqres.in/api'
 });
 
-httpro
-  .get('/comments')
-  .query({
-    postId: 1
-  })
-  .exec()
-  .then(response => {
-    console.log(response);
-  });
+function testGet(userId) {
+  return httpro
+    .get('/users')
+    .params(userId)
+    .exec();
+}
+function testPost() {
+  return httpro
+    .post('/users')
+    .body({ name: 'morpheus' })
+    .body({ job: 'leader' })
+    .exec();
+}
+
+testPost().then(responsePost => {
+  console.log('responsePost: ', responsePost);
+});
